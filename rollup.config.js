@@ -19,5 +19,18 @@ export default {
     // system - SystemJS 加载器格式
     sourcemap: true
   },
+  plugins: [
+    nodeResolve({
+      extensions: ['.js', '.ts']
+    }),
+    ts({
+      tsconfig: path.resolve(__dirname, 'tsconfig.json')
+    }),
+    serve({
+      port: 6666,
+      contentBase: '',
+      openPage: '/public/index.html'
+    }),
+  ]
 
 }
