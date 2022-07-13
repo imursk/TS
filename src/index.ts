@@ -46,19 +46,47 @@ function toUpperCase (target: any, key: any) {
   })
 }
 
+function double (num: number) {
+  return function (target: any, key: string) { // target指的是类
+    let v = target[key]
+    Object.defineProperty(target, key, {
+      get () {
+        return num * v
+      },
+    })
+  }
+}
+
+function Enum (x: boolean) {
+  return function (target: any, key: string, descriptor: PropertyDescriptor) {
+    descriptor.enumerable = x
+  }
+}
+
+function params (target: any, key: string, index: number) {
+  console.log()
+}
+
 // @eat
 class Person {
-  constructor() {
-
-  }
   // eat!: () => void
   @toUpperCase
   name: string = 'zk'
+
+  @double(3)
+  static age: number = 18  // 静态属性通过类调用
+
+  @Enum(false)
+  drink (@params val: any) { }
 }
 let p = new Person()
 // p.eat()
 p.name = 'kk'
 console.log(p.name)
+
+console.log(Person.age)
+console.log(p)
+
 
 
 
